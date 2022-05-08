@@ -11,6 +11,6 @@
     <title>Title</title>
 </head>
 <body>
-
+<jsp:forward page="/controller"></jsp:forward>
 </body>
 </html>

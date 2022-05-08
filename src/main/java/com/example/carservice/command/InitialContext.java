@@ -14,13 +14,14 @@ public class InitialContext {
 
     private final RequestFactory simpleRequestFactory = new SimpleRequestFactory();
 
-
     public Command lookup(String commandName) {
 
         switch (commandName) {
-            default:{
-                return null;
-            }
+            case "login":
+                return new ShowLoginPageCommand(simpleRequestFactory);
+            default:
+                return new ShowMainPageCommand(simpleRequestFactory);
+
         }
 
     }
