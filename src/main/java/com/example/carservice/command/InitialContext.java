@@ -18,7 +18,9 @@ public class InitialContext {
     public Command lookup(String commandName) {
 
         switch (commandName) {
-
+            default:{
+                return null;
+            }
         }
 
     }
