@@ -19,7 +19,7 @@ public class LogoutCommand implements Command{
             return requestFactory.createForwardResponse(PagePath.MAIN_PAGE.getPath());
         }
         request.clearSession();
-        return requestFactory.createRedirectResponse(PagePath.MAIN_PAGE.getPath());
+        return requestFactory.createRedirectResponse("/controller?command=main");
     }
 
     private boolean noLoggedInUserPresent(CommandRequest request) {

@@ -13,6 +13,6 @@ public class ShowAddPageCommand implements Command{
 
     @Override
     public CommandResponse execute(CommandRequest request) throws ServiceError {
-        return requestFactory.createRedirectResponse(PagePath.ADD_SERVICE_PAGE.getPath());
+        return requestFactory.createForwardResponse(PagePath.ADD_SERVICE_PAGE.getPath());
     }
 }

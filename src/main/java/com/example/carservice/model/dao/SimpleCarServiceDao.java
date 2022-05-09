@@ -14,7 +14,7 @@ public class SimpleCarServiceDao implements CarServiceDao {
     private static final Logger LOG  = LoggerFactory.getLogger(SimpleCarServiceDao.class);
     private static final String SQL_FIND_ALL_SERVICES = "select service_id, service_name, service_cost from service";
     private static final String SQL_ADD_SERVICE = "insert into service(service_name,service_cost) values(?,?)";
-    private static final String SQL_UPDATE_SERVICE = "update service set service_name = ?, service_cost=? where service_id = ?";
+    private static final String SQL_UPDATE_SERVICE = "update service set service_name=?, service_cost=? where service_id = ?";
     private static final String SQL_DELETE_SERVICE = "delete from service where service_id = ?";
     private final ConnectionPool connectionPool;
 
@@ -59,7 +59,7 @@ public class SimpleCarServiceDao implements CarServiceDao {
         try(final Connection connection = connectionPool.getConnection(); final  PreparedStatement preparedStatement = connection.prepareStatement(SQL_UPDATE_SERVICE)){
             preparedStatement.setString(1,serviceName);
             preparedStatement.setInt(2,serviceCost);
-            preparedStatement.setLong(2,serviceId);
+            preparedStatement.setLong(3,serviceId);
             int countRowsUpdated = preparedStatement.executeUpdate();
             return countRowsUpdated>0;
         }catch (SQLException e){

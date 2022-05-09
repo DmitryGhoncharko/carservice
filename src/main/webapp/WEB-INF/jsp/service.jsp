@@ -27,13 +27,14 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6">
-                                <h1>${service.getName}</h1>
+                                <h1>${service.name}</h1>
+                                <h1>${service.cost}</h1>
                             </div>
                             <div class="col-md-6">
                                 <div class="row">
                                     <div class="col-md-6">
-                                        <form action="/controller?command=updateService">
-                                            <input hidden name="serviceId" value="${service.getId}">
+                                        <form action="/controller?command=updateService" method="post">
+                                            <input hidden name="serviceId" value="${service.id}">
                                             <input type="text" name="newServiceName">
                                             <input type="number" name="serviceCost">
                                             <button type="submit" class="btn btn-success">
@@ -42,8 +43,8 @@
                                         </form>
                                     </div>
                                     <div class="col-md-6">
-                                        <form action="/controller?command=deleteService">
-                                            <input hidden name="serviceId" value="${service.getId}">
+                                        <form action="/controller?command=deleteService" method="post">
+                                            <input hidden name="serviceId" value="${service.id}">
                                             <button type="submit" class="btn btn-success">
                                                 Удалить
                                             </button>

@@ -19,6 +19,6 @@ public class UpdateServiceCommand implements Command{
         final String serviceName = request.getParameter("newServiceName");
         final int serviceCost = Integer.parseInt(request.getParameter("serviceCost"));
         carServiceService.updateService(serviceId,serviceName,serviceCost);
-        return requestFactory.createRedirectResponse("/controller?command=updateService");
+        return requestFactory.createRedirectResponse("/controller?command=main");
     }
 }

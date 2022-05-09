@@ -5,14 +5,8 @@ import com.example.carservice.controller.RequestFactory;
 import com.example.carservice.controller.SimpleRequestFactory;
 import com.example.carservice.model.connection.ConnectionPool;
 import com.example.carservice.model.connection.HikariCPConnectionPool;
-import com.example.carservice.model.dao.CarServiceDao;
-import com.example.carservice.model.dao.SimpleCarServiceDao;
-import com.example.carservice.model.dao.SimpleUserDao;
-import com.example.carservice.model.dao.UserDao;
-import com.example.carservice.model.service.CarServiceService;
-import com.example.carservice.model.service.SimpleCarServiceService;
-import com.example.carservice.model.service.SimpleUserService;
-import com.example.carservice.model.service.UserService;
+import com.example.carservice.model.dao.*;
+import com.example.carservice.model.service.*;
 import com.example.carservice.securiy.BcryptWithSaltHasherImpl;
 import com.example.carservice.securiy.PasswordHasher;
 import com.example.carservice.validator.SimpleUserValidator;
@@ -27,6 +21,8 @@ public class InitialContext {
     private final RequestFactory simpleRequestFactory = new SimpleRequestFactory();
     private final CarServiceDao simpleCarServiceDao = new SimpleCarServiceDao(hikariCPConnectionPool);
     private final CarServiceService simpleCarServiceService = new SimpleCarServiceService(simpleCarServiceDao);
+    private final OrderDao orderDao = new SimpleOrderDao(hikariCPConnectionPool);
+    private final OrderService orderService = new SimpleOrderService(orderDao);
     public Command lookup(String commandName) {
 
         switch (commandName) {
@@ -52,7 +48,17 @@ public class InitialContext {
                 return new ShowLocationPageCommand(simpleRequestFactory);
             case "addservicepage":
                 return new ShowAddPageCommand(simpleRequestFactory);
-            default:
+            case "showadminorders":
+                return new ShowAdminOrdersPage(simpleRequestFactory,orderService);
+            case "endorder":
+                return new SubmitOrderCommand(simpleRequestFactory,orderService);
+            case "clientorders":
+                return new ShowClientOrderPageCommand(simpleRequestFactory,orderService);
+            case "addorderToClient":
+                return new AddOrderClientCommand(simpleRequestFactory, orderService);
+            case "createorderclient":
+                return new ShowServicesClientCommand(simpleRequestFactory,simpleCarServiceService);
+                default:
                 return new ShowMainPageCommand(simpleRequestFactory);
         }
 
