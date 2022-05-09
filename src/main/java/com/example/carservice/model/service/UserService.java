@@ -7,5 +7,5 @@ import java.util.Optional;
 
 public interface UserService {
     Optional<User> authenticateUser(String login, String password) throws ServiceError;
-
+    boolean addUserAsClient(String login,String password) throws ServiceError;
 }

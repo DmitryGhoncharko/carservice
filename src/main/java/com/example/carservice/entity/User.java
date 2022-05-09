@@ -3,73 +3,57 @@ package com.example.carservice.entity;
 import java.util.Objects;
 
 public class User {
-    private final long userId;
-    private final String userLogin;
-    private final String userPassword;
-    private final String getUserPassword;
-    private final Role userRole;
+    private final long id;
+    private final String login;
+    private final String password;
+    private final Role role;
 
     private User(Builder builder) {
-        userId = builder.userId;
-        userLogin = builder.userLogin;
-        userPassword = builder.userPassword;
-        getUserPassword = builder.getUserPassword;
-        userRole = builder.userRole;
+        id = builder.userId;
+        login = builder.userLogin;
+        password = builder.userPassword;
+        role = builder.userRole;
     }
 
-    public long getUserId() {
-        return userId;
+    public long getId() {
+        return id;
     }
 
-    public String getUserLogin() {
-        return userLogin;
+    public String getLogin() {
+        return login;
     }
 
-    public String getUserPassword() {
-        return userPassword;
+    public String getPassword() {
+        return password;
     }
 
-    public String getGetUserPassword() {
-        return getUserPassword;
-    }
-
-    public Role getUserRole() {
-        return userRole;
+    public Role getRole() {
+        return role;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-
         User user = (User) o;
-
-        if (userId != user.userId) return false;
-        if (!Objects.equals(userLogin, user.userLogin)) return false;
-        if (!Objects.equals(userPassword, user.userPassword)) return false;
-        if (!Objects.equals(getUserPassword, user.getUserPassword))
-            return false;
-        return userRole == user.userRole;
+        return id == user.id &&
+                Objects.equals(login, user.login) &&
+                Objects.equals(password, user.password) &&
+                role == user.role;
     }
 
     @Override
     public int hashCode() {
-        int result = (int) (userId ^ (userId >>> 32));
-        result = 31 * result + (userLogin != null ? userLogin.hashCode() : 0);
-        result = 31 * result + (userPassword != null ? userPassword.hashCode() : 0);
-        result = 31 * result + (getUserPassword != null ? getUserPassword.hashCode() : 0);
-        result = 31 * result + (userRole != null ? userRole.hashCode() : 0);
-        return result;
+        return Objects.hash(id, login, password, role);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "userId=" + userId +
-                ", userLogin='" + userLogin + '\'' +
-                ", userPassword='" + userPassword + '\'' +
-                ", getUserPassword='" + getUserPassword + '\'' +
-                ", userRole=" + userRole +
+                "userId=" + id +
+                ", userLogin='" + login + '\'' +
+                ", userPassword='" + password + '\'' +
+                ", userRole=" + role +
                 '}';
     }
 
@@ -77,7 +61,6 @@ public class User {
         private long userId;
         private String userLogin;
         private String userPassword;
-        private String getUserPassword;
         private Role userRole;
 
         public Builder withUserId(long userId) {

@@ -20,7 +20,6 @@ public class Cache {
         return Optional.empty();
     }
 
-
     public void addCommand(String commandName, Command command) {
         LOG.info("Add command into cache");
         commandCache.put(commandName, command);

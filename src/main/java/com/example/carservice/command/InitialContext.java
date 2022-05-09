@@ -5,23 +5,55 @@ import com.example.carservice.controller.RequestFactory;
 import com.example.carservice.controller.SimpleRequestFactory;
 import com.example.carservice.model.connection.ConnectionPool;
 import com.example.carservice.model.connection.HikariCPConnectionPool;
+import com.example.carservice.model.dao.CarServiceDao;
+import com.example.carservice.model.dao.SimpleCarServiceDao;
+import com.example.carservice.model.dao.SimpleUserDao;
+import com.example.carservice.model.dao.UserDao;
+import com.example.carservice.model.service.CarServiceService;
+import com.example.carservice.model.service.SimpleCarServiceService;
+import com.example.carservice.model.service.SimpleUserService;
+import com.example.carservice.model.service.UserService;
 import com.example.carservice.securiy.BcryptWithSaltHasherImpl;
 import com.example.carservice.securiy.PasswordHasher;
+import com.example.carservice.validator.SimpleUserValidator;
+import com.example.carservice.validator.UserValidator;
 
 public class InitialContext {
     private final ConnectionPool hikariCPConnectionPool = new HikariCPConnectionPool();
     private final PasswordHasher bcryptWithSaltHasher = new BcryptWithSaltHasherImpl();
-
+    private final UserValidator userValidator = new SimpleUserValidator();
+    private final UserDao simpleUserDao = new SimpleUserDao(hikariCPConnectionPool);
+    private final UserService simpleUserService = new SimpleUserService(simpleUserDao,userValidator,bcryptWithSaltHasher);
     private final RequestFactory simpleRequestFactory = new SimpleRequestFactory();
-
+    private final CarServiceDao simpleCarServiceDao = new SimpleCarServiceDao(hikariCPConnectionPool);
+    private final CarServiceService simpleCarServiceService = new SimpleCarServiceService(simpleCarServiceDao);
     public Command lookup(String commandName) {
 
         switch (commandName) {
             case "login":
                 return new ShowLoginPageCommand(simpleRequestFactory);
+            case "logincmnd":
+                return new LoginCommand(simpleRequestFactory, simpleUserService);
+            case "registration":
+                return new ShowRegistrationPage(simpleRequestFactory);
+            case "registrationcmnd":
+                return new RegistrationCommand(simpleRequestFactory,simpleUserService);
+            case "logout":
+                return new LogoutCommand(simpleRequestFactory);
+            case "showservices":
+                return new ShowServicesPageCommand(simpleRequestFactory,simpleCarServiceService);
+            case "addService":
+                return new AddServiceCommand(simpleRequestFactory,simpleCarServiceService);
+            case "updateService":
+                return new UpdateServiceCommand(simpleRequestFactory,simpleCarServiceService);
+            case "deleteService":
+                return new DeleteServiceCommand(simpleRequestFactory,simpleCarServiceService);
+            case "location":
+                return new ShowLocationPageCommand(simpleRequestFactory);
+            case "addservicepage":
+                return new ShowAddPageCommand(simpleRequestFactory);
             default:
                 return new ShowMainPageCommand(simpleRequestFactory);
-
         }
 
     }

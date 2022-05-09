@@ -28,25 +28,25 @@ public class Controller extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceError {
-        LOG.trace("caught req and resp in doGet method");
-        try {
-            processRequest(req, resp);
-        } catch (ServiceError | IOException | ServletException e) {
-            LOG.error("Exception in doget method servlet", e);
-            throw e;
+            LOG.trace("caught req and resp in doGet method");
+            try {
+                processRequest(req, resp);
+            } catch (ServiceError | IOException | ServletException e) {
+                LOG.error("Exception in doget method servlet", e);
+                throw e;
+            }
         }
-    }
 
-    @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceError {
+        @Override
+        protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, ServiceError {
 
-        LOG.trace("caught req and resp in doPost method");
-        try {
-            processRequest(req, resp);
-        } catch (ServiceError | IOException | ServletException e) {
-            LOG.error("Service exception in doget method servlet", e);
-            throw e;
-        }
+            LOG.trace("caught req and resp in doPost method");
+            try {
+                processRequest(req, resp);
+            } catch (ServiceError | IOException | ServletException e) {
+                LOG.error("Service exception in doget method servlet", e);
+                throw e;
+            }
     }
 
     private void processRequest(HttpServletRequest httpRequest, HttpServletResponse httpResponse) throws ServiceError, IOException, ServletException {

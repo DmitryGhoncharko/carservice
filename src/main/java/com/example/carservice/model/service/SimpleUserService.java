@@ -1,5 +1,6 @@
 package com.example.carservice.model.service;
 
+import com.example.carservice.entity.Role;
 import com.example.carservice.entity.User;
 import com.example.carservice.exception.DaoException;
 import com.example.carservice.exception.ServiceError;
@@ -33,7 +34,7 @@ public class SimpleUserService implements UserService {
             final Optional<User> userFromDB = userDao.findUserByLogin(login);
             if (userFromDB.isPresent()) {
                 final User userInstance = userFromDB.get();
-                final String hashedPasswordFromDB = userInstance.getUserPassword();
+                final String hashedPasswordFromDB = userInstance.getPassword();
                 if (passwordHasher.checkIsEqualsPasswordAndPasswordHash(password, hashedPasswordFromDB)) {
                     return userFromDB;
                 }
@@ -43,5 +44,19 @@ public class SimpleUserService implements UserService {
             throw new ServiceError("Cannot authentucate user, userLogin: " + login + " userPassword: " + password, e);
         }
         return Optional.empty();
+    }
+
+    @Override
+    public boolean addUserAsClient(String login, String password) throws ServiceError {
+        if (!userValidator.validateUserDataByLoginAndPassword(login, password)) {
+            return false;
+        }
+        try {
+            String hashedPassword = passwordHasher.hashPassword(password);
+            return userDao.addUser(login, hashedPassword, Role.CLIENT);
+        } catch (DaoException e) {
+            LOG.error("Cannot add user as client, userLogin: " + login, e);
+            throw new ServiceError("Cannot add user as client, userLogin: " + login, e);
+        }
     }
 }
