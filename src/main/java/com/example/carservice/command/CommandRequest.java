@@ -32,4 +32,8 @@ public interface CommandRequest {
     ServletContext getServletContext();
 
     Collection<Part> getParts() throws ServletException, IOException;
+
+    String getUrl();
+
+    String getQueryString();
 }

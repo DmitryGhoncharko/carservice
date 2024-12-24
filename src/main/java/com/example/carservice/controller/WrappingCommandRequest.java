@@ -87,4 +87,14 @@ public class WrappingCommandRequest implements CommandRequest {
     public Collection<Part> getParts() throws ServletException, IOException {
         return request.getParts();
     }
+
+    @Override
+    public String getUrl() {
+        return request.getRequestURL().toString();
+    }
+
+    @Override
+    public String getQueryString() {
+        return request.getQueryString();
+    }
 }

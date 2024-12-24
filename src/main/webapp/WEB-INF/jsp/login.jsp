@@ -192,7 +192,7 @@
                 </div>
 
                 <div class="form-group help">
-                    <input type="password" name="password"  pattern="^(?=.*[0-9])(?=.*[!@#$%^&*])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z!@#$%^&*]{6,100}$" class="form-control needs-validation" id="inputPassword" placeholder="Ваш пароль" required>
+                    <input type="password" name="password"  class="form-control needs-validation" id="inputPassword" placeholder="Ваш пароль" required>
                     <div class="invalid-feedback">
                         Пароль должен быть минимум шесть символов, пароль должен содержать буквы цифры и спец символы
                     </div>

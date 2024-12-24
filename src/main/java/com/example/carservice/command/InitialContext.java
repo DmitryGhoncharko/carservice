@@ -17,12 +17,13 @@ public class InitialContext {
     private final PasswordHasher bcryptWithSaltHasher = new BcryptWithSaltHasherImpl();
     private final UserValidator userValidator = new SimpleUserValidator();
     private final UserDao simpleUserDao = new SimpleUserDao(hikariCPConnectionPool);
-    private final UserService simpleUserService = new SimpleUserService(simpleUserDao,userValidator,bcryptWithSaltHasher);
+    private final UserService simpleUserService = new SimpleUserService(simpleUserDao, userValidator, bcryptWithSaltHasher);
     private final RequestFactory simpleRequestFactory = new SimpleRequestFactory();
-    private final CarServiceDao simpleCarServiceDao = new SimpleCarServiceDao(hikariCPConnectionPool);
-    private final CarServiceService simpleCarServiceService = new SimpleCarServiceService(simpleCarServiceDao);
-    private final OrderDao orderDao = new SimpleOrderDao(hikariCPConnectionPool);
-    private final OrderService orderService = new SimpleOrderService(orderDao);
+    private final TestDao testDao = new TestDao(hikariCPConnectionPool);
+    private final QuestionDao questionDao = new QuestionDao(hikariCPConnectionPool);
+    private final AnswerDao answerDao = new AnswerDao(hikariCPConnectionPool);
+    private final TestDataDao testDataDao = new TestDataDao(hikariCPConnectionPool);
+
     public Command lookup(String commandName) {
 
         switch (commandName) {
@@ -33,32 +34,38 @@ public class InitialContext {
             case "registration":
                 return new ShowRegistrationPage(simpleRequestFactory);
             case "registrationcmnd":
-                return new RegistrationCommand(simpleRequestFactory,simpleUserService);
+                return new RegistrationCommand(simpleRequestFactory, simpleUserService);
+            case "addTestPage":
+                return new AddTestPageCommand(simpleRequestFactory);
+            case "addTest":
+                return new AddTestCommand(simpleRequestFactory, testDao);
+            case "listTests":
+                return new ListTestPageCommand(simpleRequestFactory, testDao);
+            case "deleteTest":
+                return new DeleteTestCommand(simpleRequestFactory, testDao, testDataDao);
+            case "editTest":
+                return new EditTestCommandPage(testDao, simpleRequestFactory);
+            case "updateTest":
+                return new UpdateTestCommand(testDao, simpleRequestFactory);
+            case "viewQuestions":
+                return new ShowQuestionsPageCommand(simpleRequestFactory,testDataDao,questionDao,testDao);
+            case "deleteQuestion":
+                return new DeleteQuestionCommand(simpleRequestFactory,questionDao,testDataDao);
+            case "addQuestion":
+                return new AddQuestonPageCommand(simpleRequestFactory);
+            case"addQuestion1":
+                return new AddQuestionCommand(simpleRequestFactory,questionDao,testDataDao);
+            case "editQuestion":
+                return new AddAnswerPageCommand(simpleRequestFactory,questionDao,answerDao,testDataDao);
+            case "addAnswerc":
+                return new AddAnswerCommand(simpleRequestFactory,answerDao,questionDao,testDataDao);
+            case "listTestsC":
+                return new ListTestForClientPageCommand(simpleRequestFactory,testDataDao,testDao);
+            case "startTest":
+                return new StartTestPageCommand(simpleRequestFactory,testDataDao,questionDao,testDao,answerDao);
             case "logout":
                 return new LogoutCommand(simpleRequestFactory);
-            case "showservices":
-                return new ShowServicesPageCommand(simpleRequestFactory,simpleCarServiceService);
-            case "addService":
-                return new AddServiceCommand(simpleRequestFactory,simpleCarServiceService);
-            case "updateService":
-                return new UpdateServiceCommand(simpleRequestFactory,simpleCarServiceService);
-            case "deleteService":
-                return new DeleteServiceCommand(simpleRequestFactory,simpleCarServiceService);
-            case "location":
-                return new ShowLocationPageCommand(simpleRequestFactory);
-            case "addservicepage":
-                return new ShowAddPageCommand(simpleRequestFactory);
-            case "showadminorders":
-                return new ShowAdminOrdersPage(simpleRequestFactory,orderService);
-            case "endorder":
-                return new SubmitOrderCommand(simpleRequestFactory,orderService);
-            case "clientorders":
-                return new ShowClientOrderPageCommand(simpleRequestFactory,orderService);
-            case "addorderToClient":
-                return new AddOrderClientCommand(simpleRequestFactory, orderService);
-            case "createorderclient":
-                return new ShowServicesClientCommand(simpleRequestFactory,simpleCarServiceService);
-                default:
+            default:
                 return new ShowMainPageCommand(simpleRequestFactory);
         }
 

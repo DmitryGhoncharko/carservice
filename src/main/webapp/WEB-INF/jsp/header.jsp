@@ -31,20 +31,16 @@
 
         <c:choose>
             <c:when test="${not empty sessionScope.user}">
-                <a class="nav-link" href="/controller?command=location" role="button">Наше местоположение</a>
                 <c:if test="${sessionScope.user.role eq Role.CLIENT}">
-                    <a class="nav-link" href="/controller?command=createorderclient" role="button">Оформить заказ в автосервис</a>
-                    <a class="nav-link" href="/controller?command=clientorders" role="button">Мои заказы</a>
+                    <a class="nav-link" href="/controller?command=listTestsC" role="button">Список тестов</a>
                 </c:if>
                 <c:if test="${sessionScope.user.role eq Role.ADMIN}">
-                    <a class="nav-link" href="/controller?command=showservices" role="button">Изменить перечень услуг</a>
-                    <a class="nav-link" href="/controller?command=showadminorders" role="button">Просмотреть заказы</a>
-                    <a class="nav-link" href="/controller?command=addservicepage" role="button">Добавить новую услугу</a>
+                    <a class="nav-link" href="/controller?command=addTestPage" role="button">Добавить тест</a>
+                    <a class="nav-link" href="/controller?command=listTests" role="button">Список тестов</a>
                 </c:if>
                 <a class="btn btn-primary" href="/controller?command=logout" role="button">Выйти</a>
             </c:when>
             <c:otherwise>
-                <a class="nav-link" href="/controller?command=location" role="button">Наше местоположение</a>
                 <a class="btn btn-primary" href="/controller?command=login" role="button">Войти</a>
                 <a class="nav-link" href="/controller?command=registration" role="button">Регистрация</a>
             </c:otherwise>

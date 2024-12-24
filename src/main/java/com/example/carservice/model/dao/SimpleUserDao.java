@@ -12,10 +12,10 @@ import java.util.Optional;
 
 public class SimpleUserDao implements UserDao {
     private static final Logger LOG = LoggerFactory.getLogger(SimpleUserDao.class);
-    private static final String SQL_AUTHENTICATE_USER = "select user_id, user_email, user_password, r.role_name from user" +
-            " left join role r on r.role_id = user.user_role" +
-            " where user_email = ?";
-    private static final String SQL_ADD_USER = "insert into user(user_email, user_password, user_role) VALUES (?,?,?)";
+    private static final String SQL_AUTHENTICATE_USER = "select user_id, user_login, user_password, r.user_role_name from test._user" +
+            " left join test.user_role r on r.user_role_id = test._user.user_role_id" +
+            " where user_login = ?";
+    private static final String SQL_ADD_USER = "insert into test._user(user_login, user_password, user_role_id) VALUES (?,?,?)";
     private final ConnectionPool connectionPool;
 
     public SimpleUserDao(ConnectionPool connectionPool) {
@@ -48,7 +48,7 @@ public class SimpleUserDao implements UserDao {
         try (final Connection connection = connectionPool.getConnection(); final PreparedStatement preparedStatement = connection.prepareStatement(SQL_ADD_USER)) {
             preparedStatement.setString(1, login);
             preparedStatement.setString(2, password);
-            preparedStatement.setInt(3, role.ordinal());
+            preparedStatement.setInt(3, 3);
             final int countRowsAdded = preparedStatement.executeUpdate();
             if (countRowsAdded > 0) {
                 return true;

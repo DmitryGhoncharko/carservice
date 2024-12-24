@@ -19,6 +19,11 @@ public class SimpleServiceLocator implements ServiceLocator {
             return commandFromCache.get();
         }
             final InitialContext initialContext = new InitialContext();
+        String dt = null;
+        if(commandName.contains("?")){
+                dt = commandName.split("\\?")[0];
+                commandName = dt;
+        }
 
             final Command command = initialContext.lookup(commandName);
             CACHE.addCommand(commandName, command);

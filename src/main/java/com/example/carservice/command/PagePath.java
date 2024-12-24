@@ -1,9 +1,16 @@
 package com.example.carservice.command;
 
 public enum PagePath {
-    MAIN_PAGE("/WEB-INF/jsp/main.jsp"), LOGIN_PAGE("/WEB-INF/jsp/login.jsp"), ORDERS_PAGE("/WEB-INF/jsp/orders.jsp"),
-    REGISTRATION_PAGE("/WEB-INF/jsp/registration.jsp"), LOCATION_PAGE("/WEB-INF/jsp/location.jsp"), CLIENT_ORDERS_PAGE("/WEB-INF/jsp/clientorder.jsp"),
-    SERVICE_PAGE("/WEB-INF/jsp/service.jsp"), ADD_SERVICE_PAGE("/WEB-INF/jsp/addservice.jsp"), CREATE_ORDER_PAGE("/WEB-INF/jsp/createorder.jsp");
+    MAIN_PAGE("/WEB-INF/jsp/main.jsp"), LOGIN_PAGE("/WEB-INF/jsp/login.jsp"),
+    REGISTRATION_PAGE("/WEB-INF/jsp/registration.jsp"),
+    ADD_TEST_PAGE("/WEB-INF/jsp/addTest.jsp"),
+    LIST_TEST_PAGE("/WEB-INF/jsp/listTests.jsp"),
+    UPDATE_TEST_PAGE("/WEB-INF/jsp/updateTest.jsp"),
+    QUESTIONS_PAGE("/WEB-INF/jsp/questions.jsp"),
+    QUESTION_ADD_PAGE("/WEB-INF/jsp/questionAdd.jsp"),
+    ANSWER_ADD_PAGE("/WEB-INF/jsp/addAnswer.jsp"),
+    TESTS_PAGE_FOR_CLIENT("/WEB-INF/jsp/tests.jsp"),
+    START_TEST_FOR_CLIENT("/WEB-INF/jsp/startTest.jsp"),;
     private final String path;
 
     PagePath(String path) {
