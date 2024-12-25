@@ -2,7 +2,6 @@ package com.example.carservice.command;
 
 import com.example.carservice.controller.RequestFactory;
 import com.example.carservice.entity.Question;
-import com.example.carservice.entity.TestData;
 import com.example.carservice.exception.DaoException;
 import com.example.carservice.exception.ServiceError;
 import com.example.carservice.model.dao.AnswerDao;

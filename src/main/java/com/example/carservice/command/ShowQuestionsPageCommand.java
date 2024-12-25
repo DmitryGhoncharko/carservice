@@ -39,10 +39,13 @@ public class ShowQuestionsPageCommand implements Command {
         for(Question question : questionList) {
             for(TestData testData : testDataList) {
                 if(question.getId().equals(testData.getQuestionId())) {
-                    result.add(question);
+                    if(!result.contains(question)) {
+                        result.add(question);
+                    }
                 }
             }
         }
+
         request.addAttributeToJsp("testId",testId);
         request.addAttributeToJsp("questions",result);
         return requestFactory.createForwardResponse(PagePath.QUESTIONS_PAGE.getPath());
